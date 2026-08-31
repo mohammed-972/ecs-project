@@ -1,12 +1,49 @@
-FROM node
+# FROM node:20-alpine
+
+# WORKDIR /app
+
+# COPY /package.json /yarn.lock ./
+
+# RUN yarn install
+
+# COPY . .
+
+# RUN yarn build && yarn global add serve
+
+# EXPOSE 3000
+
+# CMD ["serve", "-s", "build"]
+
+#stage 1 build
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
+COPY package.json yarn.lock ./
+
+RUN yarn install
+
 COPY . .
 
-RUN yarn install && yarn build && yarn global add serve
+RUN yarn build
+
+#stage 2 run
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/build /app/build
 
 EXPOSE 3000
+
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup 
+
+RUN yarn global add serve
+
+RUN chown -R appuser:appgroup /app/build
+
+USER appuser
 
 CMD ["serve", "-s", "build"]
 
