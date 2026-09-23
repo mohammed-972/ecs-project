@@ -24,7 +24,7 @@ resource "aws_ecs_task_definition" "td" {
 [
   {
     "name": "main",
-    "image": "296222413273.dkr.ecr.eu-west-2.amazonaws.com/threat_composer@sha256:fdd4a4097ebfe4beeb457f0e5f85cce3a47dbfe45d0d659664bf02f3aa70b738",
+    "image": "296222413273.dkr.ecr.eu-west-2.amazonaws.com/threat_composer:c228b9d",
     "cpu": 256,
     "memory": 512,
     "essential": true,
