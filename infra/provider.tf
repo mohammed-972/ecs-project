@@ -5,20 +5,13 @@ terraform {
       version = "6.63.0"
     }
   }
-}
 
-provider "aws" {
-  # Configuration options
-}
-
-
-terraform {
   backend "s3" {
-    bucket = "mo-s3-bucket-terraform"
-    key    = "ecs-project"
-    region = "eu-west-2"
+    bucket       = "mo-s3-bucket-terraform"
+    key          = "ecs-project/terraform.tfstate"
+    region       = "eu-west-2"
+    use_lockfile = true
   }
 }
-
 
 
