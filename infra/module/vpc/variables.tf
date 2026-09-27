@@ -1,7 +1,5 @@
 variable "project_name" {
-  type        = string
-  description = "name of project"
-  default     = "threat-composer"
+  type = string
 }
 
 variable "vpc_cidr" {
