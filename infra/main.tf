@@ -38,9 +38,14 @@ module "ecs" {
   target_group_arn            = module.alb.target_group_arn
   ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
   depends_on                  = [module.alb]
-
+  image_uri                   = "${module.ecr.repository_url}:${var.image_tag}"
 }
 
 module "iam" {
   source = "./module/iam"
+}
+
+module "ecr" {
+  source       = "./module/ecr"
+  project_name = var.project_name
 }
