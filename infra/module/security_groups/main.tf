@@ -1,7 +1,7 @@
 resource "aws_security_group" "alb" {
-  name        = "alb-sg"
+  name        = "${var.project_name}-alb-sg"
   description = "allow http & https from anywhere"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = var.vpc_id
 
 }
 
@@ -34,9 +34,9 @@ resource "aws_vpc_security_group_egress_rule" "alb_to_ecs" {
 
 
 resource "aws_security_group" "ecs" {
-  name        = "ecs-sg"
+  name        = "${var.project_name}-ecs-sg"
   description = "allow from alb sg"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = var.vpc_id
 
 }
 

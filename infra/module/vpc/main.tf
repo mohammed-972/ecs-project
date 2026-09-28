@@ -1,8 +1,8 @@
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr
 
   tags = {
-    Name = "threat_composer_vpc"
+    Name = "${var.project_name}-vpc"
   }
 }
 
@@ -13,7 +13,7 @@ resource "aws_subnet" "public_1" {
 
 
   tags = {
-    Name = "threat_composer_public_1"
+    Name = "${var.project_name}-public_1"
   }
 }
 
@@ -24,7 +24,7 @@ resource "aws_subnet" "public_2" {
 
 
   tags = {
-    Name = "threat_composer_public_2"
+    Name = "${var.project_name}-public_2"
   }
 }
 
@@ -33,7 +33,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "threat_composer_igw"
+    Name = "${var.project_name}-igw"
   }
 }
 
@@ -47,7 +47,7 @@ resource "aws_route_table" "rt" {
   }
 
   tags = {
-    Name = "threat_composer_rt"
+    Name = "${var.project_name}-rt"
   }
 }
 
