@@ -3,3 +3,7 @@ variable "project_name" {
   default = "threat-composer"
 }
 
+variable "image_tag" {
+  type    = string
+  default = "v1"
+}
