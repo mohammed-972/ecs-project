@@ -21,3 +21,7 @@ variable "target_group_arn" {
 variable "ecs_task_execution_role_arn" {
   type = string
 }
+
+variable "image_uri" {
+  type = string
+}
