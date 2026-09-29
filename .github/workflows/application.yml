@@ -1,11 +1,9 @@
 # This is a basic workflow to help you get started with Actions
-name: Connect to an AWS role from a GitHub repository
+name: Application pipeline
 
 # Controls when the action will run. Invokes the workflow on push events but only for the main branch
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
 
 env:
@@ -28,7 +26,17 @@ jobs:
           role-to-assume: arn:aws:iam::296222413273:role/ecs-github-actions #change to reflect your IAM role’s ARN
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-      # Hello from AWS: WhoAmI
-      - name: Sts GetCallerIdentity
+     
+     
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push docker image to Amazon ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: threat-composer
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          aws sts get-caller-identity
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
