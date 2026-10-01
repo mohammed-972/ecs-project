@@ -5,5 +5,5 @@ variable "project_name" {
 
 variable "image_tag" {
   type    = string
-  default = "v1"
+  default = "v2"
 }
