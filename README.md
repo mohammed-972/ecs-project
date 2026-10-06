@@ -14,7 +14,7 @@ Separate Terraform pipelines deploy and destroy the infrastructure.
 
 Here you can see the app is publicly visible on https://tm.mohammedislam.uk
 
-![app](ecs-images/working-https.png)
+![HTTPS demo](ecs-images/working-https.png)
 
 ## Local Setup
 
@@ -22,6 +22,7 @@ Here you can see the app is publicly visible on https://tm.mohammedislam.uk
 
 ```bash
 git clone https://github.com/mohammed-972/ecs-project
+cd ecs-project
 ```
 
 2. Build Docker image
@@ -48,11 +49,25 @@ Run the following command
 curl -i http://localhost:3000/health
 ```
 
-![app](ecs-images/architecture.png)
 
+## Bootstrap / First Deployment
+
+Initially or after the entire infrastructure is destroyed, the ECR repository must be recreated before the application pipeline can push a Docker image.
+
+From the `infra/` directory:
+
+```bash
+terraform init
+terraform apply -target=module.ecr
+```
 
 ## Architecture Diagram
 
+![architecture diagram](ecs-images/architecture.png)
+
+## Project Structure
+
+```
 .
 ├── app/
 │   ├── Dockerfile
@@ -78,6 +93,26 @@ curl -i http://localhost:3000/health
 │       ├── application.yml
 │       ├── terraform-deploy.yml
 │       └── terraform-destroy.yml
-├── images/
+├── ecs-images/
 └── README.md
+```
 
+## Application Pipeline
+
+![application pipeline](ecs-images/application_pipeline.png)
+
+This pipeline is triggered when code is pushed to the `main` branch. The pipeline authenticates to AWS using OIDC, builds the Docker image, tags it with the Git commit SHA and pushes the image to ECR.
+
+
+## Deploy Pipeline
+
+![deploy pipeline](ecs-images/deploy_pipeline.png)
+
+This pipeline is triggered automatically after the application pipeline completes successfully. The pipeline authenticates to AWS, sets up Terraform, initialises the remote backend, validates the configuration, creates a Terraform plan and applies it.
+
+
+## Destroy Pipeline
+
+![destroy pipeline](ecs-images/destroy_pipeline.png)
+
+This pipeline is triggered manually using Github actions. The pipeline authenticates to AWS, initialises Terraform and destroys the Terraform infrastructure.
