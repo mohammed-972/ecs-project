@@ -2,6 +2,10 @@ name: deploy pipeline
 
 on:
   workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'the git commit sha of the ecr image'
+        required: true 
     
 env:
   
@@ -11,7 +15,7 @@ permissions:
       id-token: write  
       contents: read    
 jobs:  
-  on-success:
+  terraform-deploy:
     environment: prod
     runs-on: ubuntu-latest
     steps:
@@ -19,8 +23,6 @@ jobs:
 
       - name: Checkout repo
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
@@ -41,11 +43,11 @@ jobs:
         working-directory: infra
       
       - name: terraform plan 
-        run: terraform plan -var="image_tag=${{ github.event.workflow_run.head_sha }}" -out=FILE
+        run: terraform plan -var="image_tag=${{ github.event.inputs.image_tag }}" -out=tfplan
         working-directory: infra
 
       - name: terraform apply  
-        run: terraform apply FILE
+        run: terraform apply tfplan
         working-directory: infra
 
 
