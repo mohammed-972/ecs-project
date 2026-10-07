@@ -3,6 +3,7 @@ name: Application pipeline
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - 'app/**'
 
@@ -14,7 +15,7 @@ permissions:
       id-token: write   
       contents: read 
 jobs:
-  AssumeRoleAndCallIdentity:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
