@@ -1,10 +1,7 @@
 name: deploy pipeline
 
 on:
-  workflow_run:
-    workflows: [Application pipeline]
-    types:
-      - completed
+  workflow_dispatch:
     
 env:
   
