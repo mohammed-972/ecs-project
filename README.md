@@ -16,6 +16,14 @@ Here you can see the app is publicly visible on https://tm.mohammedislam.uk
 
 ![HTTPS demo](ecs-images/working-https.png)
 
+Manual health check, by running
+
+```bash
+curl -i https://tm.mohammedislam.uk/health
+```
+
+![health check](ecs-images/health_check.png)
+
 ## Local Setup
 
 1. Clone this repo
@@ -65,10 +73,11 @@ terraform apply -target=module.ecr
 
 ![architecture diagram](ecs-images/architecture.png)
 
+
 ## Project Structure
 
 ```
-.
+ecs-project
 ├── app/
 │   ├── Dockerfile
 │   ├── server.js
@@ -101,14 +110,20 @@ terraform apply -target=module.ecr
 
 ![application pipeline](ecs-images/application_pipeline.png)
 
-This pipeline is triggered when code is pushed to the `main` branch. The pipeline authenticates to AWS using OIDC, builds the Docker image, tags it with the Git commit SHA and pushes the image to ECR.
+The Application Pipeline can be triggered manually or automatically when files inside the `app/` directory are changed and pushed to the `main` branch.
+
+The pipeline authenticates to AWS using OIDC, logs in to Amazon ECR, builds the Docker image, tags it with the Git commit SHA, and pushes the image to the ECR repository.
 
 
 ## Deploy Pipeline
 
 ![deploy pipeline](ecs-images/deploy_pipeline.png)
 
-This pipeline is triggered automatically after the application pipeline completes successfully. The pipeline authenticates to AWS, sets up Terraform, initialises the remote backend, validates the configuration, creates a Terraform plan and applies it.
+The Deploy Pipeline is triggered manually using GitHub Actions.
+
+When starting the workflow, an ECR image tag must be provided. The image tag is the Git commit SHA used by the Application Pipeline when the image was pushed to ECR.
+
+The pipeline authenticates to AWS using OIDC, sets up Terraform, initialises the S3 remote backend, validates the Terraform configuration, creates a Terraform plan using the selected image tag, and applies that saved plan.
 
 
 ## Destroy Pipeline
