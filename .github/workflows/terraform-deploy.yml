@@ -49,9 +49,5 @@ jobs:
       - name: terraform apply  
         run: terraform apply tfplan
         working-directory: infra
-
-
-
-
-
+        
         
