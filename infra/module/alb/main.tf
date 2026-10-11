@@ -10,7 +10,7 @@ resource "aws_lb" "alb" {
 
 resource "aws_lb_target_group" "tg" {
   name        = "${var.project_name}-tg"
-  port        = 3000
+  port        = var.container_port
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = var.vpc_id

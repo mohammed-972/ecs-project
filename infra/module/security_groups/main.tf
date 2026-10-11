@@ -27,9 +27,9 @@ resource "aws_vpc_security_group_egress_rule" "alb_to_ecs" {
   security_group_id = aws_security_group.alb.id
 
   cidr_ipv4   = "0.0.0.0/0"
-  from_port   = 3000
+  from_port   = var.container_port
   ip_protocol = "tcp"
-  to_port     = 3000
+  to_port     = var.container_port
 }
 
 
@@ -44,9 +44,9 @@ resource "aws_vpc_security_group_ingress_rule" "ecs_from_alb" {
   security_group_id            = aws_security_group.ecs.id
   referenced_security_group_id = aws_security_group.alb.id
 
-  from_port   = 3000
+  from_port   = var.container_port
   ip_protocol = "tcp"
-  to_port     = 3000
+  to_port     = var.container_port
 }
 
 resource "aws_vpc_security_group_egress_rule" "ecs" {

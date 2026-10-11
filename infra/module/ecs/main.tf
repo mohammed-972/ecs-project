@@ -32,8 +32,7 @@ resource "aws_ecs_task_definition" "td" {
 
     "portMappings": [
       {
-        "containerPort": 3000,
-        "hostPort":       3000
+        "containerPort": ${var.container_port}
       }
     
     ],
@@ -70,7 +69,7 @@ resource "aws_ecs_service" "service" {
 
   load_balancer {
     container_name   = "main"
-    container_port   = 3000
+    container_port   = var.container_port
     target_group_arn = var.target_group_arn
   }
 

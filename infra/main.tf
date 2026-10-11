@@ -9,7 +9,7 @@ module "security_groups" {
 
   vpc_id       = module.networking.vpc_id
   project_name = var.project_name
-
+  container_port = var.container_port
 }
 
 module "acm" {
@@ -26,7 +26,7 @@ module "alb" {
   public_subnet_1       = module.networking.public_subnet_1
   public_subnet_2       = module.networking.public_subnet_2
   certificate_arn       = module.acm.certificate_arn
-
+  container_port = var.container_port
 }
 
 module "ecs" {
@@ -39,6 +39,7 @@ module "ecs" {
   ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
   depends_on                  = [module.alb]
   image_uri                   = "${module.ecr.repository_url}:${var.image_tag}"
+  container_port = var.container_port
 }
 
 module "iam" {

@@ -21,3 +21,7 @@ variable "public_subnet_2" {
 variable "certificate_arn" {
   type = string
 }
+
+variable "container_port" {
+  type = number
+}

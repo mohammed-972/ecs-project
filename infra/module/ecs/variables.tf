@@ -25,3 +25,7 @@ variable "ecs_task_execution_role_arn" {
 variable "image_uri" {
   type = string
 }
+
+variable "container_port" {
+  type = number
+}
