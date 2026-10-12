@@ -14,9 +14,9 @@ provider "aws" {
   default_tags {
     tags = {
       project_name = var.project_name
-      environment = "prod" 
-      managed = "terraform" 
-      owner = "mohammed"
-   }
- }
+      environment  = "prod"
+      managed      = "terraform"
+      owner        = "mohammed"
+    }
+  }
 }

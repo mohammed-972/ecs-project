@@ -9,6 +9,6 @@ variable "image_tag" {
 }
 
 variable "container_port" {
-  type = number
+  type    = number
   default = 8080
 }
