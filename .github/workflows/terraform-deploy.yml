@@ -39,6 +39,7 @@ jobs:
       
       - name: tf lint
         run: tflint -recursive
+        working-directory: infra
 
       - name: check format
         run: terraform fmt -check -recursive
