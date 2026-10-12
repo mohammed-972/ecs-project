@@ -37,12 +37,17 @@ jobs:
         run: terraform init
         working-directory: infra
       
-      - name: tf lint
-        run: tflint -recursive
-        working-directory: infra
+      - name: setup tflint
+        uses: terraform-linters/setup-tflint@v6
+        with:
+          tflint_version: latest
+      
+      - name: run tflint
+        run: tflint --recursive
 
       - name: check format
         run: terraform fmt -check -recursive
+        working-directory: infra
 
       - name: terraform validate
         run: terraform validate
