@@ -1,6 +1,10 @@
 resource "aws_cloudwatch_log_group" "ecs" {
   name = "ecs/${var.project_name}"
 
+  tags = {
+    purpose = "container-logs"
+  }
+
 }
 
 resource "aws_ecs_cluster" "cluster" {
@@ -16,8 +20,8 @@ resource "aws_ecs_task_definition" "td" {
   family                   = "${var.project_name}-td"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = 256
-  memory                   = 512
+  cpu                      = var.cpu
+  memory                   = var.memory
   execution_role_arn       = var.ecs_task_execution_role_arn
   container_definitions    = <<TASK_DEFINITION
   
@@ -25,8 +29,8 @@ resource "aws_ecs_task_definition" "td" {
   {
     "name": "main",
     "image": "${var.image_uri}",
-    "cpu": 256,
-    "memory": 512,
+    "cpu": ${var.cpu},
+    "memory": ${var.memory},
     "essential": true,
   
 
