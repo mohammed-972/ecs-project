@@ -29,7 +29,7 @@ jobs:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-          
+
       - name: setup-terraform
         uses: hashicorp/setup-terraform@v4 
         
@@ -37,6 +37,9 @@ jobs:
         run: terraform init
         working-directory: infra
       
+      - name: check format
+        run: terraform fmt -check -recursive
+
       - name: terraform validate
         run: terraform validate
         working-directory: infra
