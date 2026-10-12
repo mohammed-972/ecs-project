@@ -19,6 +19,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
@@ -33,7 +34,7 @@ jobs:
       - name: Build, tag, and push docker image to Amazon ECR
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: threat-composer
+          REPOSITORY: pomodoro-app
           IMAGE_TAG: ${{ github.sha }}
         run: |
           cd app
