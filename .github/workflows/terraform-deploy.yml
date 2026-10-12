@@ -37,6 +37,9 @@ jobs:
         run: terraform init
         working-directory: infra
       
+      - name: tf lint
+        run: tflint -recursive
+
       - name: check format
         run: terraform fmt -check -recursive
 
