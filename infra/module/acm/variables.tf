@@ -1,6 +1,6 @@
 variable "certificate_domain_name" {
   type    = string
-  default = "tm.mohammedislam.uk"
+  default = "pomodoro.mohammedislam.uk"
 }
 
 variable "route53_zone_id" {
