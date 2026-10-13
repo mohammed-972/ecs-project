@@ -25,3 +25,17 @@ variable "ecs_task_execution_role_arn" {
 variable "image_uri" {
   type = string
 }
+
+variable "container_port" {
+  type = number
+}
+
+variable "cpu" {
+  type    = number
+  default = 256
+}
+
+variable "memory" {
+  type    = number
+  default = 512
+}
