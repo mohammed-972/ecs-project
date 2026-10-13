@@ -15,7 +15,6 @@ permissions:
       contents: read 
 jobs:
   build-and-push:
-    environment: prod
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
