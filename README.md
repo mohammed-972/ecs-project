@@ -1,6 +1,6 @@
 # AWS ECS Deployment Project
 
-This project deploys the AWS Threat Composer app to AWS using ECS Fargate.
+This project deploys a Pomodoro timer app to AWS using ECS Fargate.
 
 The infrastructure is provisioned with Terraform and includes a custom VPC, 2 public subnets, an Application Load Balancer, HTTPS using ACM, Route 53 DNS, ECR to store Docker images, and ECS Fargate for running the app.
 
@@ -12,14 +12,14 @@ Separate Terraform pipelines deploy and destroy the infrastructure.
 
 ## App Demo
 
-Here you can see the app is publicly visible on https://tm.mohammedislam.uk
+Here you can see the app is publicly visible on https://pomodoro.mohammedislam.uk
 
 ![HTTPS demo](ecs-images/working-https.png)
 
 Manual health check, by running
 
 ```bash
-curl -i https://tm.mohammedislam.uk/health
+curl -i https://pomodoro.mohammedislam.uk/health
 ```
 
 ![health check](ecs-images/health_check.png)
@@ -29,32 +29,32 @@ curl -i https://tm.mohammedislam.uk/health
 1. Clone this repo
 
 ```bash
-git clone https://github.com/mohammed-972/ecs-project
-cd ecs-project
+git clone https://github.com/mohammed-972/terraform-ecs-pomodoro
+cd terraform-ecs-pomodoro
 ```
 
 2. Build Docker image
 
 ```bash
-docker build -t threat-composer ./app
+docker build -t pomodoro-app ./app
 ```
 
 3. Run container
 
 ```bash
-docker run -p 3000:3000 threat-composer
+docker run -p 8080:8080 pomodoro-app
 ```
 
 4. View app
 
-Open: http://localhost:3000
+Open: http://localhost:8080
 
 5. Health check
 
 Run the following command
 
 ```bash
-curl -i http://localhost:3000/health
+curl -i http://localhost:8080/health
 ```
 
 
