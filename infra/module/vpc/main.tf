@@ -82,7 +82,6 @@ resource "aws_route_table_association" "public_2" {
   route_table_id = aws_route_table.public_rt.id
 }
 
-
 resource "aws_eip" "nat_gw" {
   domain   = "vpc"
 }
