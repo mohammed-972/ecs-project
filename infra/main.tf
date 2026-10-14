@@ -15,7 +15,6 @@ module "security_groups" {
 module "acm" {
   source          = "./module/acm"
   route53_zone_id = data.aws_route53_zone.zone.zone_id
-
 }
 
 module "alb" {
@@ -32,8 +31,8 @@ module "alb" {
 module "ecs" {
   source                      = "./module/ecs"
   project_name                = var.project_name
-  public_subnet_1             = module.networking.public_subnet_1
-  public_subnet_2             = module.networking.public_subnet_2
+  private_subnet_1             = module.networking.private_subnet_1
+  private_subnet_2             = module.networking.private_subnet_2
   ecs_security_group_id       = module.security_groups.ecs_security_group_id
   target_group_arn            = module.alb.target_group_arn
   ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
