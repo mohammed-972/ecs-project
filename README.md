@@ -2,7 +2,7 @@
 
 This project deploys a Pomodoro timer app to AWS using ECS Fargate.
 
-The infrastructure is provisioned with Terraform and includes a custom VPC, 2 public subnets, an Application Load Balancer, HTTPS using ACM, Route 53 DNS, ECR to store Docker images, and ECS Fargate for running the app.
+The infrastructure is provisioned with Terraform and includes a custom VPC, 2 public subnets, 2 private subnets, NAT gateway, internet gateway, an application load balancer, HTTPS using ACM, Route 53 DNS, ECR to store Docker images, and ECS Fargate for running the app.
 
 CI/CD is implemented using GitHub Actions with OIDC authentication to AWS. 
 
@@ -77,12 +77,13 @@ terraform apply -target=module.ecr
 ## Project Structure
 
 ```
-ecs-project
-├── app/
+terraform-ecs-pomodoro
+├── app/...
+│   ├── css/
+│   ├── js/
 │   ├── Dockerfile
-│   ├── server.js
-│   ├── package.json
-│   └── src/
+│   ├── index.html
+│   └── nginx.conf
 ├── infra/
 │   ├── backend.tf
 │   ├── main.tf
