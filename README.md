@@ -10,6 +10,11 @@ Images are built and tagged with the Git commit SHA before being pushed to ECR v
 
 Separate Terraform pipelines deploy and destroy the infrastructure.
 
+## Architecture Diagram
+
+![architecture diagram](ecs-images/architecture.png)
+
+
 ## App Demo
 
 Here you can see the app is publicly visible on https://pomodoro.mohammedislam.uk
@@ -68,11 +73,6 @@ From the `infra/` directory:
 terraform init
 terraform apply -target=module.ecr
 ```
-
-## Architecture Diagram
-
-![architecture diagram](ecs-images/architecture.png)
-
 
 ## Project Structure
 
